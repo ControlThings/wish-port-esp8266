@@ -1,0 +1,40 @@
+ESP8266 CT-EVB hardware README
+
+The programming port is the 2x3 pin header near the red Olimex ESP8266
+module. The pins are:
+
+1 3.3V
+2 GND
+3 (TX out to RS485 transciever)
+4 TX (of ESP8266 chip)
+5 (RX from to RS485 transciever)
+6 RX (of ESP8266 chip)
+
+For programming, connect GND (pin 2)to USB-TTL serial adapter, pin 4 to RX of
+the adapter and and pin 6 to TX of the adapter. Also the +3V3 supply (pin 1)
+can be taken from the USB-TTL adapter, if it is powerful enough to
+supply the ESP8266 chip.
+
+For RS485 use, use a jumper block to chort pins 3&4 and pins 5&6.
+
+Here is an illustration of the PCB:
+________________________________________________________
+__________________________                              |
+| GND +12V   pulse1 pulse2|                             |
+|   Green 4-pole          |     (programming            |
+|   connector block       |      enable btn)            |
+|_________________________|                             |
+                                                        |
+            _____________________                       |
+       1 2  |Red ESP8266 module)|                       |
+      (3)4  |                   |                       |
+      (5)6  |                   |                       |
+            |                   |                       |
+            |                   |                       |
+            |                   |                       |
+            |                   |                       |
+            |                   |                       |
+            |                   |                       |
+            |                   |    (reset             |
+            |                   |     btn)              |
+            |___________________|                       |

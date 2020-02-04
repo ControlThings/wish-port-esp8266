@@ -1,0 +1,32 @@
+How to check where the function code is allocated in - Flash, or RAM?
+
+As you know, any function that is called from an interrupt service
+routine (ISR) must be cached in IRAM on ESP8266 - and not on flash.
+
+The allocation is controlled by the __attribute__((section(".text"))),
+or the ICACHE_RAM_ATTR macro. Please note, that this information applies
+only to our (ControlThing's) tweaked ld linker script! On a normal
+ESP8266 SDK any code without section attributes are put into IRAM.
+
+But anyway: this is how you can check the placement of a function, for
+example the SDK function system_get_time:
+
+$ xtensa-lx106-elf-readelf -s build/app.out |grep system_get_time
+2483: 40101ac0    18 FUNC    GLOBAL DEFAULT    4 system_get_time
+
+This means that the address of the function is 0x40101ac0, which is
+located in IRAM, so it is OK to call it from an ISR. 
+Remember, the sections are defined here in the linker
+script: port/esp8266/ld/eagle.app.v6.ld
+
+MEMORY
+{
+dport0_0_seg :                        org = 0x3FF00000, len = 0x10
+dram0_0_seg :                         org = 0x3FFE8000, len = 0x14000
+iram1_0_seg :                         org = 0x40100000, len = 0x8000
+irom0_0_seg :                         org = 0x40240000, len = 0xBC000
+}
+
+
+
+

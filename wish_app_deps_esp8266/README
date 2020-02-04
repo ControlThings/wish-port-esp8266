@@ -1,0 +1,10 @@
+What is this?
+
+This directory has copies of the required files from
+mist-c99/wish_app_deps, in order to facilitate compilation on esp8266
+target. The copies exist because when compiling for esp8266, we should
+not have any of files under wish_app_deps, because they can be found
+under wish-c99/src, but on the other hand we must include
+wish_app.h from mist-c99/wish_app/, because it significantly differs
+from wish-c99/src/wish_app.h, which would be included if we were to use
+wish app deps from wish-c99/src.

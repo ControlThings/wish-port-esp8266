@@ -1,0 +1,58 @@
+# Wish and Mist C99 on ESP8266
+
+## Quick Wish on esp8266 instructions
+
+To upload a program to the ESP8266 you need to put it in bootloader mode. There is usually a button for doing this, you must press and hold it during a hard reset for the chip to enter the bootloader's flash upload mode.
+
+Required the first time on completely blank esp8266, or after flash_erase:
+
+	make flash_erase	#to blank the chip
+	make flash_all	#to upload program, and to enter default values to different parameters.
+
+To erase the flash chip and upload new program:
+
+* make flash_erase
+* make flash_all
+* make flash  :    Just upload the program
+
+## Toolchain
+
+We currently use our custom toolchain, which built on top of ESP8266_NONOS_SDK_V2.0.0_16_08_10, and the xtensa GCC compiler using these instructions:
+port/esp8266/doc/toolchain/Toolchain.md
+
+## Information on the esp8266 port
+
+This project is the Wish and Mist c99 port to the esp8266 platform. The port supports several hardware environments:
+
+* Sonoff S20
+* 
+
+
+## Important technical things to remember
+
+### We have a custom linker script
+
+Funtions without any section attributes will be placed in the flash by
+ default, which is different from the "normal" behaviour of esp8266 SDKs.
+ 
+ 
+### Flash usage
+ 
+* Everything is setup for hardware with 1Mbyte flash. Devices with larger flash chip should be OK. 
+* We have the spiffs in use. This places restrictions on how the "rf cal" sector introduced in SDK 1.5.x will be placed.
+
+#### Changing flash size
+
+Configuration of flash chip must be reflected in at least the following
+places:
+
+The LD script, where the length of the irom0 segment must be correct
+(however it should must be inside the first 1024 Kbytes)
+
+-in Makefile, in the esptool.py elf2image step, you should provide
+--flash_size and --flash_mode correctly
+(See flash chip's datasheet for supportted SPI modes (dual, quad..)
+
+-in Makefile, the esptool.py write_flash step MUST have the correct
+flash_size and flash_mode defined.
+

@@ -1,0 +1,12 @@
+[submodule "wish-c99"]
+	path = wish-c99
+	url = jan@foremost.controlthings.fi:/git/wish-c99
+[submodule "mist-c99"]
+	path = mist-c99
+	url = jan@foremost.controlthings.fi:/git/mist-c99
+[submodule "libesphttpd"]
+	path = libesphttpd
+	url = https://github.com/Spritetm/libesphttpd.git
+[submodule "mkspiffs"]
+	path = mkspiffs
+	url = jan@foremost.controlthings.fi:/git/mkspiffs
